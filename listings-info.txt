@@ -1,0 +1,2 @@
+The data from listing.csv is Airbnb listing data in New York in Jan 2015
+http://data.beta.nyc/dataset/inside-airbnb-data/resource/9d64399b-36d6-40a9-b0bb-f26ae0d9c53f
