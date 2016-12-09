@@ -1,18 +1,28 @@
+var gzip = function(obj) {
+  var textEncoder = new TextEncoder(),
+      arrayData = textEncoder.encode(JSON.stringify(obj)),
+      arrayCompressed = deflate_compress(arrayData),
+      stringCompressed = String.fromCharCode.apply(null, arrayCompressed);
+  return stringCompressed;
+  //return btoa(stringCompressed);
+}
+
 var compress = function(input) {
   //TODO our code goes here
   //Currently assumes input is an JSON array -- will not handle anything else!
-  var keys, output, column, key, i, j;
+  var keys, output, column, key, i, j, textEncoder, textDecoder;
 
-  keys = Object.keys(input[0])
-  output = [keys]
+  keys = Object.keys(input[0]);
+  output = [gzip(keys)];
 
   for (i = 0; i < keys.length; i++) {
-    column = []
-    key = keys[i]
+    column = [];
+    key = keys[i];
     for (j = 0; j < input.length; j++) {
-      column[j] = input[j][key]
+      column[j] = input[j][key];
     }
-    output[i+1] = column
+
+    output[i+1] = gzip(column)
   }
 
   return output;
@@ -52,7 +62,8 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   compressData = function() {
-    outputData.value = JSON.stringify(compress(JSON.parse(inputData.value)));
+    //outputData.value = JSON.stringify(compress(JSON.parse(inputData.value)));
+    outputData.value = compress(JSON.parse(inputData.value));
     outputSize.innerHTML = outputData.value.length;
   };
 
